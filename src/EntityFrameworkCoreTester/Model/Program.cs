@@ -9,8 +9,8 @@ namespace EntityFrameworkCoreTester.Model
         public string Name { get; set; }
         public string Description { get; set; }
         public Guid CreatorUserKey { get; set; }
-        public Guid ModifierUserKey { get; set; }
-        public DateTime CreationTime { get; set; }
-        public DateTime ModificationTime { get; set; }
+        public Guid? ModifierUserKey { get; set; }
+        public DateTime CreationTime { get; set; } = DateTime.Now;
+        public DateTime? ModificationTime { get; set; }
     }
 }

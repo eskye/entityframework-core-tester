@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using EntityFrameworkCoreTester.Helpers;
+using EntityFrameworkCoreTester.Helpers; 
 
 namespace EntityFrameworkCoreTester.Model
 {

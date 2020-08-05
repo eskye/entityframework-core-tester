@@ -16,7 +16,7 @@ namespace EntityFrameworkCoreTester.Model
         public virtual RefApplicationStatus RefApplicationStatus { get; set; }
         public int Score { get; set; }
         public Guid Key { get; set; }
-        public DateTime CreationTime { get; set; }
-        public DateTime ModificationTime { get; set; }
+        public DateTime CreationTime { get; set; } = DateTime.Now;
+        public DateTime? ModificationTime { get; set; }
     }
 }
