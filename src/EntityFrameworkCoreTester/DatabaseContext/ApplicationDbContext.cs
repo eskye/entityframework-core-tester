@@ -2,23 +2,29 @@
 using EntityFrameworkCoreTester.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using programModel =  EntityFrameworkCoreTester.Model.Program;
 
 namespace EntityFrameworkCoreTester.DatabaseContext
 {
     public class ApplicationDbContext : DbContext
     {
-        private static IConfigurationRoot Config { get; set; }
+        private static IConfigurationRoot _config;
 
+        public ApplicationDbContext(DbContextOptions options):base(options)
+        {
+            
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory()))
-                .AddJsonFile("appsettings.json", optional: true);
-            
-            Config = builder.Build();
-            optionsBuilder.UseSqlServer(Config.GetConnectionString("Default"));
-        }
+            { 
+                var builder = new ConfigurationBuilder()
+                    .SetBasePath(Path.Combine(Directory.GetCurrentDirectory()))
+                    .AddJsonFile("appsettings.json", optional: true);
 
+                _config = builder.Build();
+                optionsBuilder.UseSqlServer(_config.GetConnectionString("Default"));
+            }
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             FluentBuilder.OnCreateModel(modelBuilder);
@@ -31,6 +37,6 @@ namespace EntityFrameworkCoreTester.DatabaseContext
         public DbSet<RefComplaintOutcome> RefComplaintOutcomes { get; set; }
         public DbSet<RefApplicationOutcome> RefApplicationOutcomes { get; set; }
         public DbSet<RefComplaintStatus> RefComplaintStatuses { get; set; }
-        public DbSet<Model.Program> Programs { get; set; }
+        public DbSet<programModel> Programs { get; set; }
     }
 }

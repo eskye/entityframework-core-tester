@@ -5,6 +5,6 @@ namespace EntityFrameworkCoreTester.ModelInterface
     public interface IUserAudit
     {
         Guid CreatorUserKey { get; set; }
-        Guid ModifierUserKey { get; set; }
+        Guid? ModifierUserKey { get; set; }
     }
 }

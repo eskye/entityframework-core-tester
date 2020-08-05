@@ -16,9 +16,9 @@ namespace EntityFrameworkCoreTester.Model
         public string PhoneNumber { get; set; }
         public int Gender { get; set; }
         public Guid CreatorUserKey { get; set; }
-        public Guid ModifierUserKey { get; set; }
-        public DateTime CreationTime { get; set; }
-        public DateTime ModificationTime { get; set; }
+        public Guid? ModifierUserKey { get; set; }
+        public DateTime CreationTime { get; set; } = DateTime.Now;
+        public DateTime? ModificationTime { get; set; }
         public ICollection<ProgramApplication> ProgramApplications { get; set; }
     }
 }

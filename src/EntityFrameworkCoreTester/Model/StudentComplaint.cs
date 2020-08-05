@@ -20,8 +20,8 @@ namespace EntityFrameworkCoreTester.Model
        
         public virtual RefComplaintStatus RefComplaintStatus { get; set; }
         public Guid CreatorUserKey { get; set; }
-        public Guid ModifierUserKey { get; set; }
-        public DateTime CreationTime { get; set; }
-        public DateTime ModificationTime { get; set; }
+        public Guid? ModifierUserKey { get; set; }
+        public DateTime CreationTime { get; set; } = DateTime.Now;
+        public DateTime? ModificationTime { get; set; }
     }
 }
