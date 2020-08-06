@@ -19,11 +19,14 @@ namespace EntityFrameworkCoreTester
         static void Main(string[] args)
         {
             RegisterServices();
-           
+
+            var result = PayeCalculator.SimpleTaxMonthly(300000);
+            Console.WriteLine($"Result is =  {result}");
             DataSetPlayground();
            
             DisposeServices();
             Console.WriteLine("Done Seeding Program Table");
+            Console.ReadKey();
         }
 
         private static void RegisterServices()
@@ -77,15 +80,35 @@ namespace EntityFrameworkCoreTester
 
             var dataset = (from p in dbContext.Programs 
                 where p.CreationTime >= DateTime.Today
-                      && p.CreationTime < DateTime.Now.AddDays(1)
-                           select p).ToList();
-            var groupeddataset = dataset.GroupBy(x => x.CreationTime.Hour).ToList();
+                      && p.CreationTime < DateTime.Now.AddDays(1) 
+                           select new{
+                               p.Name,
+                               p.CreationTime,
+                               p.Description
+                               }).GroupBy(x => x.CreationTime.AddDays(-1).Hour).Select(e => new
+              {
+               key = e.Key,
+               Name = e.Count()
+            }).ToList();
 
-//            var dataset = dbContext.Programs
-//                .FromSqlInterpolated($"SELECT * CreationTime from dbo.Programs WHERE CreationTime >= {DateTime.Today} AND CreationTime < {DateTime.Now.AddDays(1)} GROUP BY CreationTime").ToList();
-            groupeddataset.ForEach(d =>
+//            var entities = await Table.AsNoTracking()
+//                .Include(x => x.ExpenseItemType)
+//                .Where(x => x.BusinessIdentityNumber == businessIdentityNumber && x.CreationTime.Month == DateTime.Now.Month)
+//                .Select(x => new {
+//                    ExpenseGroupName = x.ExpenseItemType.ExpenseGroupName,
+//                    TotalCost = x.TotalCost
+//                })
+//                .GroupBy(x => x.ExpenseGroupName).Select(x => new ExpenseItemPercentageDto()
+//                {
+//                    ExpenseGroupName = x.Key,
+//                    TotalCost = x.Count()
+//                }).ToListAsync();
+
+            //            var dataset = dbContext.Programs
+            //                .FromSqlInterpolated($"SELECT * CreationTime from dbo.Programs WHERE CreationTime >= {DateTime.Today} AND CreationTime < {DateTime.Now.AddDays(1)} GROUP BY CreationTime").ToList();
+            dataset.ForEach(d =>
             {
-                Console.WriteLine(d.Key);
+                Console.WriteLine(d.Name);
             });
         }
     }
